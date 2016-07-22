@@ -24,7 +24,7 @@ public class FastScrollerHelper {
     private static final long FADE_TIMEOUT = 1000;
     private static final int DURATION_FADE_OUT = 224;
     private static final int DURATION_FADE_IN = 6;
-    private static final float VELOCITY_FAST_SCROLL = 3000; //临界速度
+    private static final float VELOCITY_FAST_SCROLL = 6000; //临界速度
 
     private final FastScrollWebView mWebView;
     private final ViewGroupOverlay mOverlay;
@@ -123,6 +123,7 @@ public class FastScrollerHelper {
                     mVelocityTracker = null;
                 }
 
+                cancelPendingDrag();
                 if(mState == STATE_DRAGGING){
                     setState(STATE_VISIBLE);
                     postAutoHide();
@@ -130,7 +131,6 @@ public class FastScrollerHelper {
                 }else if(mState == STATE_VISIBLE){
                     postAutoHide();
                 }
-                cancelPendingDrag();
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(!mIsShowing){
@@ -141,6 +141,7 @@ public class FastScrollerHelper {
                 }
                 if (mState == STATE_DRAGGING) {
                     float position = calculateScrollToPosition(me);
+                    position = position < 0f ? 0f : position;
                     scrollTo(position);
                     return true;
                 }
@@ -163,7 +164,7 @@ public class FastScrollerHelper {
         }
         switch (ev.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                if (isPointInside(ev.getX(), ev.getY())) {
+                if (mIsShowing && isPointInside(ev.getX(), ev.getY())) {
                     mInitialTouchY = ev.getY();
                     startPendingDrag();
                     return true;
@@ -189,12 +190,15 @@ public class FastScrollerHelper {
         float translationY = mWebView.getScrollY()
                 + (mWebView.getHeight()-mWebView.getPaddingTop() - mWebView.getPaddingBottom())* percent
                 - mThumbImage.getHeight() * percent;
+        translationY = translationY < 0f ? 0f : translationY;
         mThumbImage.setTranslationY(translationY);
         mThumbImage.setTranslationX(mWebView.getHorizontalScrollOffset());
 
         mUpdatingLayout = false;
 
-        postAutoHide();
+        if(mState == STATE_VISIBLE){ 
+            postAutoHide();
+        }
     }
 
 
@@ -412,8 +416,8 @@ public class FastScrollerHelper {
     }
 
     private float calculateScrollProgress(){
-        float offset = mWebView.getScrollY() *1.0f/ (mWebView.getVerticalScrollRange() - mWebView.getHeight());
-        float percent =  ((mWebView.getScrollY()+(mWebView.getHeight()-mWebView.getPaddingBottom()-mWebView.getPaddingTop())*offset) *1.0f/ mWebView.getVerticalScrollRange());
+        float percent = mWebView.getScrollY() *1.0f/ (mWebView.getVerticalScrollRange() - mWebView.getHeight());
+        //float percent =  ((mWebView.getScrollY()+(mWebView.getHeight()-mWebView.getPaddingBottom()-mWebView.getPaddingTop())*offset) *1.0f/ mWebView.getVerticalScrollRange());
         return percent > 1.0f ? 1.0f : percent;
     }
 
@@ -429,9 +433,10 @@ public class FastScrollerHelper {
             progress =  y / height;
         }
 
-        float position = mWebView.getVerticalScrollRange() * progress;
-        float percent = (height * 1.0f)/mWebView.getVerticalScrollRange();
-        return position - height * percent;
+        float position = (mWebView.getVerticalScrollRange() - height)* progress;
+        //float percent = (height * 1.0f)/mWebView.getVerticalScrollRange();
+        //position = position - height * percent;
+        return position;
     }
 
     private void transitionToHidden() {
