@@ -10,8 +10,10 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.view.ViewGroupOverlay;
 import android.view.animation.PathInterpolator;
+import android.webkit.WebView;
 import android.widget.ImageView;
 
 public class FastScrollerHelper {
@@ -55,10 +57,14 @@ public class FastScrollerHelper {
         mScaledTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
         mThumbImage = new ImageView(context);
-        mThumbImage.setScaleType(ImageView.ScaleType.FIT_XY);
-        mThumbImage.setScaleX(0.6f);
-        mThumbImage.setScaleY(0.6f);
+        //mThumbImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        //mThumbImage.setScaleX(0.6f);
+        //mThumbImage.setScaleY(0.6f);
+//        mThumbImage.setMaxWidth(96);
+//        mThumbImage.setMaxHeight(126);
+
         mThumbImage.setImageResource(R.drawable.scrollbar_drag);
+        //mThumbImage.setImageDrawable(mWebView.getContext().getResources().getDrawable(R.drawable.scrollbar_drag, mWebView.getContext().getTheme()));
 
         mThumbImage.setEnabled(true);
         mThumbImage.setOnTouchListener(new View.OnTouchListener() {
@@ -76,6 +82,10 @@ public class FastScrollerHelper {
 
         mOverlay = webView.getOverlay();
         mOverlay.add(mThumbImage);
+//        ViewGroup.LayoutParams lp = mThumbImage.getLayoutParams();
+//        lp.width = 96;
+//        lp.height = 126;
+//        mThumbImage.setLayoutParams(lp);
 
         mMiniWidthTouchTarget = context.getResources().getDimensionPixelOffset(R.dimen.fast_scroller_minimum_width_touch_target);
         mMiniHeightTouchTarget = context.getResources().getDimensionPixelOffset(R.dimen.fast_scroller_minimum_height_touch_target);
