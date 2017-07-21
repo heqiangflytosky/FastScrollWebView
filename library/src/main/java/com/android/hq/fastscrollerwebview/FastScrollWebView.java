@@ -1,4 +1,4 @@
-package com.android.hq.fastscrollwebview;
+package com.android.hq.fastscrollerwebview;
 
 import android.content.Context;
 import android.util.AttributeSet;

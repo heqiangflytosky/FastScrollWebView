@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="fast_scroller_minimum_width_touch_target">48dp</dimen>
+    <dimen name="fast_scroller_minimum_height_touch_target">72dp</dimen>
+</resources>

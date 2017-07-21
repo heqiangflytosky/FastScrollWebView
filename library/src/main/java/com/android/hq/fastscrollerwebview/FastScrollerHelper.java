@@ -1,4 +1,4 @@
-package com.android.hq.fastscrollwebview;
+package com.android.hq.fastscrollerwebview;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -10,10 +10,8 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.view.ViewGroupOverlay;
 import android.view.animation.PathInterpolator;
-import android.webkit.WebView;
 import android.widget.ImageView;
 
 public class FastScrollerHelper {

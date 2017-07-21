@@ -5,9 +5,9 @@
               android:layout_marginBottom="10dp"
             android:orientation="vertical"
               tools:context=".MainActivity">
-    <com.android.hq.fastscrollwebview.FastScrollWebView
+    <com.android.hq.fastscrollerwebview.FastScrollWebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.android.hq.fastscrollwebview.FastScrollWebView>
+        android:layout_height="match_parent"></com.android.hq.fastscrollerwebview.FastScrollWebView>
 
 </LinearLayout>
