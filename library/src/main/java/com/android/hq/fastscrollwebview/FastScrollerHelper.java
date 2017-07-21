@@ -1,4 +1,4 @@
-package com.android.hq.fastscrollerwebview;
+package com.android.hq.fastscrollwebview;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

@@ -1,4 +1,4 @@
-package com.android.hq.fastscrollwebview;
+package com.android.hq.demo;
 
 import android.app.Activity;
 import android.os.Bundle;
